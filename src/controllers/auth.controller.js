@@ -1,30 +1,47 @@
-// import { registerUser } from "../services/auth.service.js";
-
-// export const register = async (req, res, next) => {
-//   try {
-//     const user = await registerUser(req.body);
-//     res.status(201).json({ success: true, data: user });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+import * as service from "../services/auth.service.js";
+import { success } from "../utils/response.js";
 export const register = async (req, res, next) => {
   try {
-    console.log("REQ BODY 👉", req.body); // 🔥 ADD THIS
+    const data = await service.registerService(req.body);
+    success(res, "Registered successfully", data);
+  } catch (e) {
+    next(e);
+  }
+};
 
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Request body is missing"
-      });
-    }
 
-    const user = await registerUser(req.body);
-    res.status(201).json({
-      success: true,
-      data: user
-    });
-  } catch (error) {
-    next(error);
+export const login = async (req, res, next) => {
+  try {
+    const data = await service.loginService(req.body);
+    success(res, "Login success", data);
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const forgotPassword = async (req, res, next) => {
+  try {
+    await service.forgotPasswordService(req.body.email);
+    success(res, "OTP sent");
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const verifyOtp = async (req, res, next) => {
+  try {
+    await service.verifyOtpService(req.body);
+    success(res, "OTP verified");
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const resetPassword = async (req, res, next) => {
+  try {
+    await service.resetPasswordService(req.body);
+    success(res, "Password reset successful");
+  } catch (e) {
+    next(e);
   }
 };

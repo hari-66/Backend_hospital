@@ -1,6 +1,7 @@
+
 export default (err, req, res, next) => {
-  res.status(500).json({
+  res.status(400).json({
     success: false,
-    message: err.message || "Server error"
+    message: err.message
   });
 };
