@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const otpSchema = new mongoose.Schema(
   {
     email: String,
-    otp: String,
+    otp: Number,
     expiresAt: Date
   },
   { timestamps: true }
